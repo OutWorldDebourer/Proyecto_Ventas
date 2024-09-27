@@ -164,9 +164,9 @@ $productosMasVendidos = obtenerProductosMasVendidos($conn, $fecha_inicio, $fecha
     <meta charset="UTF-8">
     <title>Inicio - Gestión de Ventas y Almacén</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
     <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./css/chart.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
@@ -375,6 +375,6 @@ $productosMasVendidos = obtenerProductosMasVendidos($conn, $fecha_inicio, $fecha
     </script>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./css/bootstrap.bundle.min.js"></script>
 </body>
 </html>

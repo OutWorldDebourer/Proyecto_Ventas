@@ -183,8 +183,8 @@ if ($result === false) {
     <meta charset="UTF-8">
     <title>Catálogo de Productos y Servicios</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <script src="./css/chart.js"></script>
 
     <style>
         /* Estilos adicionales para mejorar la presentación */
@@ -392,7 +392,7 @@ if ($result === false) {
     </div>
 
     <!-- Bootstrap JS (Necesario para los modales) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./css/bootstrap.bundle.min.js"></script>
     <!-- Script para Filtrado y Búsqueda -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -142,7 +142,7 @@ if ($result === false) {
     <meta charset="UTF-8">
     <title>Historial de Cambios</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Estilos adicionales para mejorar la presentación */
         body {
@@ -272,6 +272,6 @@ if ($result === false) {
     </div>
 
     <!-- Bootstrap JS (Necesario para los componentes interactivos) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./css/bootstrap.bundle.min.js"></script>
 </body>
 </html>

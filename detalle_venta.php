@@ -66,7 +66,7 @@ if ($venta_id > 0) {
     <meta charset="UTF-8">
     <title>Detalle de Venta</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Estilos generales */
         body {
@@ -201,6 +201,6 @@ if ($venta_id > 0) {
     </div>
 
     <!-- Bootstrap JS (Opcional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./css/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,38 @@
+- Descargar PHP
+	- Agregar al PAT -BIN
+	- C:\Program Files\PHP
+
+- Descargar MySQL
+	- Agregar al PAT -BIN
+	- C:\Program Files\MySQL\MySQL Server 9.0\bin
+
+- Descagar NSSM
+	- https://nssm.cc/download
+	- CMD: Ingresa a la ruta donde lo instalaste, ejemplo: 
+		cd C:\nssm\win64
+	- CMD: 
+		nssm install VentasAppPHP
+	- Se abrirá una ventana de configuración de NSSM.
+		Path: Navega hasta el ejecutable de PHP, por ejemplo, C:\php\php.exe.
+		Startup directory: C:\Users\masah\Desktop\ventas-app
+		Arguments: -S localhost:8000
+			Opciones Adicionales:
+			En la pestaña Details, puedes agregar una descripción para el servicio.
+			En la pestaña Log on, asegúrate de que el servicio se ejecute con una cuenta que tenga los permisos necesarios.
+	- Haz clic en Install service.
+
+- Instala las tablas:
+	- CMD: mysql -u ventas_user -p
+	- CMD: SOURCE C:/Users/masah/Desktop/ventas-app/database/init.sql;
+
+- Ejecuta el Servidor:
+	- cd C:\Users\masah\Desktop\ventas-app
+	- php -S localhost:8000
+
+- Relizar BackUpp
+	- CMD: mysqldump -u root -p ventas_db > "C:\Users\masah\Desktop\Proyecto Git\database\ventas_db_backup.sql"
+
+- Restaurar el BackUpp en el destino:
+	- CMD: mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS ventas_db DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+	- CMD: mysql -u root -p ventas_db < "C:\Users\User\Desktop\ventas-app\database\ventas_db_backup.sql"
+	- CMD: mysql -u root -p -e "USE ventas_db; SHOW TABLES;"
