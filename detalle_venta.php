@@ -201,6 +201,6 @@ if ($venta_id > 0) {
     </div>
 
     <!-- Bootstrap JS (Opcional) -->
-    <script src="./css/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

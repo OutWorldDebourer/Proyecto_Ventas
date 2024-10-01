@@ -272,6 +272,6 @@ if ($result === false) {
     </div>
 
     <!-- Bootstrap JS (Necesario para los componentes interactivos) -->
-    <script src="./css/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

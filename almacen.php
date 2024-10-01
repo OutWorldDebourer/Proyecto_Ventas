@@ -237,7 +237,7 @@ if ($result_table === false) {
     <!-- CSS Personalizado -->
     <link rel="stylesheet" href="./css/styles.css">
     <!-- Chart.js -->
-    <script src="./css/chart.js"></script>
+    <script src="./js/chart.js"></script>
     <style>
         /* Estilos adicionales para mejorar la presentación */
         body {
@@ -573,13 +573,13 @@ if ($result_table === false) {
     </div>
 
     <!-- jQuery (Necesario para Select2) -->
-    <script src="./css/jquery-3.6.0.min.js"></script>
+    <script src="./js/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="./css/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 
     <!-- Select2 JS -->
-    <script src="./css/select2.min.js"></script>
+    <script src="./js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             // Inicializar Select2 en el elemento select con clase 'select2'

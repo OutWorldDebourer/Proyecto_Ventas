@@ -166,7 +166,7 @@ $productosMasVendidos = obtenerProductosMasVendidos($conn, $fecha_inicio, $fecha
     <!-- Bootstrap CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <!-- Chart.js -->
-    <script src="./css/chart.js"></script>
+    <script src="./js/chart.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
@@ -375,6 +375,6 @@ $productosMasVendidos = obtenerProductosMasVendidos($conn, $fecha_inicio, $fecha
     </script>
 
     <!-- Bootstrap JS -->
-    <script src="./css/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

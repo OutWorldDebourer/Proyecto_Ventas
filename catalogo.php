@@ -184,7 +184,7 @@ if ($result === false) {
     <title>Catálogo de Productos y Servicios</title>
     <!-- Bootstrap CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <script src="./css/chart.js"></script>
+    <script src="./js/chart.js"></script>
 
     <style>
         /* Estilos adicionales para mejorar la presentación */
@@ -392,7 +392,7 @@ if ($result === false) {
     </div>
 
     <!-- Bootstrap JS (Necesario para los modales) -->
-    <script src="./css/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
     <!-- Script para Filtrado y Búsqueda -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

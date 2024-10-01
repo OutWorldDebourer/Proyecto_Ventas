@@ -347,7 +347,7 @@ function contarHistorial($conn) {
     <!-- Bootstrap CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <!-- Chart.js -->
-    <script src="./css/chart.js"></script>
+    <script src="./js/chart.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
     <!-- Estilos adicionales -->
     <style>
@@ -827,6 +827,6 @@ function contarHistorial($conn) {
     </div>
 
     <!-- Bootstrap JS (Opcional, para funcionalidades avanzadas) -->
-    <script src="./css/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
