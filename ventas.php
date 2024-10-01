@@ -219,7 +219,7 @@ function procesarVenta($conn) {
         $errors[] = 'Debe agregar al menos un ítem a la venta.';
     }
 
-    $subtotal_sin_igv = 0;
+    $subtotalSinIGV = 0;
     foreach ($items as $item) {
         $cantidad = isset($item['cantidad']) ? intval($item['cantidad']) : 0;
         $precio_unitario = isset($item['precio_unitario']) ? floatval($item['precio_unitario']) : 0;
@@ -228,12 +228,12 @@ function procesarVenta($conn) {
             break;
         }
         // Calcular el subtotal sin IGV para cada ítem
-        $subtotal_sin_igv += ($cantidad * $precio_unitario) / (1 + ($igv / 100));
+        $subtotalSinIGV += ($cantidad * $precio_unitario) / (1 + ($igv / 100));
     }
 
     // Calcular IGV y Total
-    $total_igv = ($subtotal_sin_igv * $igv) / 100;
-    $total = $subtotal_sin_igv + $total_igv;
+    $total_igv = ($subtotalSinIGV * $igv) / 100;
+    $total = $subtotalSinIGV + $total_igv;
 
     // Verificar si la fecha ha sido modificada
     $fecha_hoy = date('Y-m-d');
@@ -250,7 +250,7 @@ function procesarVenta($conn) {
             // Insertar la venta
             $stmt = $conn->prepare("INSERT INTO ventas (denominacion, tipo_documento, moneda, tipo_cambio, fecha, subtotal, igv, total, observaciones, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'activo')");
 
-            $stmt->bind_param("sssdsssss", $denominacion, $tipo_documento, $moneda, $tipo_cambio, $fecha, $subtotal_sin_igv, $total_igv, $total, $observaciones);
+            $stmt->bind_param("sssdsssss", $denominacion, $tipo_documento, $moneda, $tipo_cambio, $fecha, $subtotalSinIGV, $total_igv, $total, $observaciones);
             $stmt->execute();
             $venta_id = $stmt->insert_id;
             $stmt->close();
@@ -346,6 +346,8 @@ function contarHistorial($conn) {
     <title>Registrar Venta</title>
     <!-- Bootstrap CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Select2 CSS -->
+    <link href="./css/select2.min.css" rel="stylesheet">
     <!-- Chart.js -->
     <script src="./js/chart.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
@@ -369,6 +371,8 @@ function contarHistorial($conn) {
             }
         }
     </style>
+    <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/select2.min.js"></script>
     <script>
         // Datos de productos en formato JSON
         const productos = <?php echo $productos_json; ?>;
@@ -391,7 +395,7 @@ function contarHistorial($conn) {
             newItem.innerHTML = `
                 <div class="col-md-4">
                     <label>Producto/Servicio:</label>
-                    <select name="items[${itemIndex}][producto_id]" class="form-select" required>
+                    <select name="items[${itemIndex}][producto_id]" class="form-select select-producto" required>
                         ${productoOptions}
                     </select>
                 </div>
@@ -408,6 +412,7 @@ function contarHistorial($conn) {
                 </div>
             `;
             itemsDiv.appendChild(newItem);
+            initializeSelect2(newItem.querySelector('.select-producto'));
             calculateTotals();
         }
 
@@ -440,6 +445,14 @@ function contarHistorial($conn) {
 
         function generarOtraVenta() {
             window.location.href = 'ventas.php';
+        }
+
+        function initializeSelect2(element) {
+            $(element).select2({
+                placeholder: "Selecciona un producto",
+                allowClear: true,
+                width: '100%'
+            });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -499,6 +512,12 @@ function contarHistorial($conn) {
                 }
             });
 
+            // Inicializar select2 en los selects existentes
+            const existingSelects = document.querySelectorAll('.select-producto');
+            existingSelects.forEach(select => {
+                initializeSelect2(select);
+            });
+
             // Inicializar cálculos al cargar
             calculateTotals();
         });
@@ -525,8 +544,6 @@ function contarHistorial($conn) {
         </div>
     </div>
 </nav>
-
-
 
     <div class="container mt-5">
         <h1 class="mb-4">Registrar Venta</h1>
@@ -633,7 +650,7 @@ function contarHistorial($conn) {
                     <div class="row mb-3 item-row">
                         <div class="col-md-4">
                             <label>Producto/Servicio:</label>
-                            <select name="items[0][producto_id]" class="form-select" required>
+                            <select name="items[0][producto_id]" class="form-select select-producto" required>
                                 <option value="">Selecciona un producto</option>
                                 <?php foreach ($productos as $producto): ?>
                                     <?php if ($producto['stock'] > 0): ?>
@@ -755,9 +772,7 @@ function contarHistorial($conn) {
             <?php endif; ?>
         <?php endif; ?>
         
-<!-- Botón de Exportar Ventas -->
-
-        <!-- Historial de Acciones -->
+<!-- Historial de Acciones -->
         <h2 class="mt-5">Historial de Acciones</h2>
         <table class="table table-bordered">
             <thead>
@@ -776,7 +791,17 @@ function contarHistorial($conn) {
                     <?php foreach ($historial_entries as $entry): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($entry['fecha']); ?></td>
-                            <td><?php echo htmlspecialchars($entry['venta_id']); ?></td>
+                            <td>
+                                <?php
+                                    if ($entry['tipo_documento'] === 'Boleta') {
+                                        echo 'B-' . str_pad($entry['venta_id'], 4, '0', STR_PAD_LEFT);
+                                    } elseif ($entry['tipo_documento'] === 'Factura') {
+                                        echo 'F-' . str_pad($entry['venta_id'], 4, '0', STR_PAD_LEFT);
+                                    } else {
+                                        echo htmlspecialchars($entry['venta_id']);
+                                    }
+                                ?>
+                            </td>
                             <td><?php echo htmlspecialchars($entry['tipo_documento'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars(number_format($entry['total'], 2)); ?></td>
                             <td>
