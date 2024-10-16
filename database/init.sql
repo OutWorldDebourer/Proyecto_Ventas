@@ -93,3 +93,7 @@ CREATE TABLE IF NOT EXISTS compras (
     INDEX idx_producto_id (producto_id),
     INDEX idx_fecha_compra (fecha_compra)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- 8. Alterar la tabla 'ventas' para agregar el campo 'numero'
+ALTER TABLE ventas 
+ADD COLUMN numero INT NOT NULL,
+ADD UNIQUE KEY unique_numero_tipo(tipo_documento, numero);

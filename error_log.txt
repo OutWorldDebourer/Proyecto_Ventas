@@ -1,0 +1,142 @@
+[10-Oct-2024 02:35:17 UTC] Error al procesar la venta: Out of range value for column 'subtotal' at row 1
+[14-Oct-2024 23:44:44 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[14-Oct-2024 23:44:52 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[15-Oct-2024 23:51:44 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:317
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(317): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(67): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 317
+[16-Oct-2024 00:04:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[16-Oct-2024 00:04:49 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[16-Oct-2024 00:04:50 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[16-Oct-2024 00:04:50 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[16-Oct-2024 00:04:50 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero_documento' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:354
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(354): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(121): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 354
+[16-Oct-2024 00:25:31 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'v.numero' in 'field list' in C:\Users\masah\Desktop\Proyecto Git\ventas.php:327
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(327): mysqli->prepare('SELECT h.fecha,...')
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(66): obtenerHistorial(Object(mysqli), 20, 0)
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 327
+[16-Oct-2024 00:33:17 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 173
+[16-Oct-2024 00:33:17 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 176
+[16-Oct-2024 00:33:17 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:180
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(180): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 180
+[16-Oct-2024 00:33:17 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 173
+[16-Oct-2024 00:33:17 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 176
+[16-Oct-2024 00:33:17 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:180
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(180): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 180
+[16-Oct-2024 00:34:49 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 173
+[16-Oct-2024 00:34:49 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 176
+[16-Oct-2024 00:34:49 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:180
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(180): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 180
+[16-Oct-2024 00:35:24 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 174
+[16-Oct-2024 00:35:24 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 177
+[16-Oct-2024 00:35:24 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:181
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(181): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 181
+[16-Oct-2024 00:37:09 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 174
+[16-Oct-2024 00:37:09 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 177
+[16-Oct-2024 00:37:09 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:181
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(181): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 181
+[16-Oct-2024 00:37:09 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 174
+[16-Oct-2024 00:37:09 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 177
+[16-Oct-2024 00:37:09 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:181
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(181): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 181
+[16-Oct-2024 00:37:10 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 174
+[16-Oct-2024 00:37:10 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 177
+[16-Oct-2024 00:37:10 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:181
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(181): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 181
+[16-Oct-2024 00:37:10 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 174
+[16-Oct-2024 00:37:10 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 177
+[16-Oct-2024 00:37:10 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:181
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(181): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 181
+[16-Oct-2024 00:37:37 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 174
+[16-Oct-2024 00:37:37 UTC] PHP Warning:  Undefined variable $tipo_documento in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 177
+[16-Oct-2024 00:37:37 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:181
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(181): mysqli_stmt->bind_param('ssisddddd', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 181
+[16-Oct-2024 01:43:50 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:256
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(256): mysqli_stmt->bind_param('sssdssssi', '', 'Boleta', 'USD', 3.76, '2024-10-16', 1.6949152542373, 0.30508474576271, 2.0, '', 43)
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(42): procesarVenta(Object(mysqli))
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 256
+[16-Oct-2024 01:43:57 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:256
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(256): mysqli_stmt->bind_param('sssdssssi', '', 'Boleta', 'USD', 3.76, '2024-10-16', 1.6949152542373, 0.30508474576271, 2.0, '', 43)
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(42): procesarVenta(Object(mysqli))
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 256
+[16-Oct-2024 01:44:21 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:256
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(256): mysqli_stmt->bind_param('sssdssssi', '', 'Boleta', 'PEN', 1.0, '2024-10-16', 1.6949152542373, 0.30508474576271, 2.0, '', 43)
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(42): procesarVenta(Object(mysqli))
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 256
+[16-Oct-2024 01:45:13 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\Users\masah\Desktop\Proyecto Git\ventas.php:256
+Stack trace:
+#0 C:\Users\masah\Desktop\Proyecto Git\ventas.php(256): mysqli_stmt->bind_param('sssdssssi', '', 'Boleta', 'PEN', 1.0, '2024-10-16', 0.84745762711864, 0.15254237288136, 1.0, '', 43)
+#1 C:\Users\masah\Desktop\Proyecto Git\ventas.php(42): procesarVenta(Object(mysqli))
+#2 {main}
+  thrown in C:\Users\masah\Desktop\Proyecto Git\ventas.php on line 256

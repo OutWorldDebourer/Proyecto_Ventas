@@ -64,95 +64,124 @@ if ($venta_id > 0) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Imprimir Venta ID <?php echo htmlspecialchars($venta_id); ?></title>
-    <!-- Bootstrap CSS para estilos básicos -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante de Venta ID <?php echo htmlspecialchars($venta_id); ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos generales */
         body {
-            margin: 10px;
-            font-size: 12px; /* Reducir tamaño de fuente para ajustarse mejor a la etiqueta */
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #f3f4f6;
         }
-
-        h1, h3 {
-            font-size: 16px;
+        .receipt-container {
+            width: 80mm;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+        }
+        .receipt {
+            padding: 10px;
+        }
+        .header {
             text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #2563eb;
+            color: white;
         }
-
-        /* Estilos específicos para impresión */
+        h1 {
+            font-size: 16px;
+            margin: 0;
+        }
+        h2 {
+            font-size: 14px;
+            margin: 15px 0 10px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 5px;
+        }
+        p {
+            margin: 0 0 8px;
+        }
+        .info-group {
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            padding: 8px 4px;
+        }
+        th {
+            background-color: #f3f4f6;
+        }
+        .total {
+            font-weight: bold;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 8px 15px;
+            text-decoration: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-back {
+            background-color: #6b7280;
+        }
+        .btn-print {
+            background-color: #2563eb;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
         @media print {
-            .no-print {
-                display: none;
-            }
             body {
-                font-size: 10px; /* Ajustar tamaño de fuente para etiqueta más pequeña */
-                margin: 0; /* Eliminar márgenes para aprovechar todo el espacio */
+                background-color: white;
             }
-            .container {
-                width: 100%; /* Asegurar que el contenedor use todo el ancho disponible */
+            .receipt-container {
+                width: 80mm;
+                margin: 0 auto;
+                box-shadow: none;
             }
-            table {
-                width: 100%;
-                font-size: 10px; /* Reducir tamaño de fuente de la tabla */
-                border: 1px solid #000; /* Asegurar bordes visibles */
+            .no-print {
+                display: none !important;
             }
-            th, td {
-                padding: 2px; /* Reducir padding para ahorrar espacio */
-                text-align: left;
-                vertical-align: top;
-                border: 1px solid #000; /* Asegurar bordes visibles */
-            }
-            /* Definir tamaño de página para etiquetera (ajustar según necesidad) */
             @page {
-                size: 80mm auto; /* Ancho fijo, altura automática */
+                size: 80mm auto;
                 margin: 0;
             }
-        }
-
-        /* Estilos para pantalla */
-        @media screen {
-            .btn-print {
-                margin-bottom: 20px;
-            }
-        }
-
-        /* Tabla estilizada */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #dee2e6;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            background-color: #f8f9fa;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-3">
-        <h1>Comprobante de Venta ID <?php echo htmlspecialchars($venta_id); ?></h1>
-
-        <div class="mb-3 no-print">
-            <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-            <a href="ventas.php" class="btn btn-secondary">Volver</a>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-header">
-                Información de la Venta
+    <div class="receipt-container">
+        <div class="receipt fade-in">
+            <div class="header">
+                <h1>Comprobante de Venta</h1>
+                <p>ID: <?php echo htmlspecialchars($venta_id); ?></p>
             </div>
-            <div class="card-body">
+            
+            <div class="info-group">
+                <h2>Información de la Venta</h2>
                 <p><strong>Tipo de Documento:</strong> <?php echo htmlspecialchars($tipo_documento); ?></p>
                 <?php if ($tipo_documento === 'Factura'): ?>
                     <p><strong>Denominación:</strong> <?php echo htmlspecialchars($denominacion); ?></p>
@@ -160,51 +189,69 @@ if ($venta_id > 0) {
                 <p><strong>Moneda:</strong> <?php echo htmlspecialchars($moneda); ?></p>
                 <p><strong>Tipo de Cambio:</strong> <?php echo htmlspecialchars($tipo_cambio); ?></p>
                 <p><strong>Fecha:</strong> <?php echo htmlspecialchars($fecha); ?></p>
-                
-                <!-- Mostrar la Tasa de IGV calculada -->
+            </div>
+
+            <div class="info-group">
+                <h2>Detalles Financieros</h2>
                 <p><strong>Tasa de IGV:</strong> <?php echo htmlspecialchars(number_format($tasa_igv, 2)); ?>%</p>
-                
                 <p><strong>Subtotal sin IGV:</strong> <?php echo htmlspecialchars(number_format($subtotal_sin_igv_db, 2)); ?> <?php echo htmlspecialchars($moneda); ?></p>
-                
-                <!-- Mostrar el monto del IGV directamente -->
                 <p><strong>Total IGV:</strong> <?php echo htmlspecialchars(number_format($igv, 2)); ?> <?php echo htmlspecialchars($moneda); ?></p>
-                
                 <p><strong>Total:</strong> <?php echo htmlspecialchars(number_format($total_db, 2)); ?> <?php echo htmlspecialchars($moneda); ?></p>
-                <p><strong>Observaciones:</strong> <?php echo htmlspecialchars($observaciones_db); ?></p>
-                <p><strong>Estado:</strong> <?php echo htmlspecialchars($estado); ?></p>
+            </div>
+
+            <div class="info-group">
+                <h2>Ítems de la Venta</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto/Servicio</th>
+                            <th>Cant.</th>
+                            <th>P.U.</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($result_items->num_rows > 0): ?>
+                            <?php while ($item = $result_items->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($item['nombre']); ?></td>
+                                    <td><?php echo htmlspecialchars($item['cantidad']); ?></td>
+                                    <td><?php echo htmlspecialchars(number_format($item['precio_unitario'], 2)); ?></td>
+                                    <td><?php echo htmlspecialchars(number_format($item['cantidad'] * $item['precio_unitario'], 2)); ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4">No hay ítems para mostrar.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-group">
+                <h2>Observaciones</h2>
+                <p><?php echo htmlspecialchars($observaciones_db); ?></p>
+            </div>
+
+            <div class="info-group">
+                <h2>Estado</h2>
+                <p><?php echo htmlspecialchars($estado); ?></p>
+            </div>
+
+            <div class="buttons no-print">
+                <a href="ventas.php" class="btn btn-back">Volver</a>
+                <button onclick="window.print()" class="btn btn-print">Imprimir</button>
             </div>
         </div>
-
-        <h3>Ítems de la Venta</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 40%;">Producto/Servicio</th>
-                    <th style="width: 15%;">Cantidad</th>
-                    <th style="width: 20%;">Precio Unitario</th>
-                    <th style="width: 25%;">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($result_items->num_rows > 0): ?>
-                    <?php while ($item = $result_items->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($item['nombre']); ?></td>
-                            <td><?php echo htmlspecialchars($item['cantidad']); ?></td>
-                            <td><?php echo htmlspecialchars(number_format($item['precio_unitario'], 2)); ?></td>
-                            <td><?php echo htmlspecialchars(number_format($item['cantidad'] * $item['precio_unitario'], 2)); ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="4">No hay ítems para mostrar.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
     </div>
 
-    <!-- Bootstrap JS (Opcional) -->
-    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('tr').forEach((row, index) => {
+                row.style.animation = `fadeIn 0.3s ease-out ${index * 0.1}s both`;
+            });
+        });
+    </script>
 </body>
 </html>

@@ -155,7 +155,7 @@ function anularVenta($conn, $venta_id) {
  * Contar documentos de un tipo específico.
  */
 function contarDocumentos($conn, $tipo_documento) {
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM ventas WHERE tipo_documento = ?");
+    $stmt = $conn->prepare("SELECT IFNULL(MAX(numero), 0) AS total FROM ventas WHERE tipo_documento = ?");
     $stmt->bind_param("s", $tipo_documento);
     if ($stmt->execute()) {
         $result = $stmt->get_result();
@@ -168,6 +168,7 @@ function contarDocumentos($conn, $tipo_documento) {
     $stmt->close();
     return $contador;
 }
+
 
 /**
  * Obtener todos los productos con stock disponible.
@@ -243,15 +244,22 @@ function procesarVenta($conn) {
     }
 
     if (empty($errors)) {
+        // Obtener el siguiente número según el tipo de documento
+        $numero = obtenerSiguienteNumero($conn, $tipo_documento);
+
         // Iniciar transacción
         $conn->begin_transaction();
 
         try {
-            // Insertar la venta
-            $stmt = $conn->prepare("INSERT INTO ventas (denominacion, tipo_documento, moneda, tipo_cambio, fecha, subtotal, igv, total, observaciones, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'activo')");
-
-            $stmt->bind_param("sssdsssss", $denominacion, $tipo_documento, $moneda, $tipo_cambio, $fecha, $subtotalSinIGV, $total_igv, $total, $observaciones);
-            $stmt->execute();
+            // Insertar la venta con el número secuencial
+            $stmt = $conn->prepare("INSERT INTO ventas (denominacion, tipo_documento, moneda, tipo_cambio, fecha, subtotal, igv, total, observaciones, estado, numero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'activo', ?)");
+            if (!$stmt) {
+                throw new Exception("Error en la preparación de la consulta: " . $conn->error);
+            }
+            $stmt->bind_param("sssdsdddsi", $denominacion, $tipo_documento, $moneda, $tipo_cambio, $fecha, $subtotalSinIGV, $total_igv, $total, $observaciones, $numero);
+            if (!$stmt->execute()) {
+                throw new Exception("Error en la ejecución de la consulta: " . $stmt->error);
+            }
             $venta_id = $stmt->insert_id;
             $stmt->close();
 
@@ -263,14 +271,24 @@ function procesarVenta($conn) {
 
                 // Insertar ítem
                 $stmt_item = $conn->prepare("INSERT INTO venta_items (venta_id, producto_id, cantidad, precio_unitario) VALUES (?, ?, ?, ?)");
+                if (!$stmt_item) {
+                    throw new Exception("Error en la preparación de la consulta de ítems: " . $conn->error);
+                }
                 $stmt_item->bind_param("iiid", $venta_id, $producto_id, $cantidad, $precio_unitario);
-                $stmt_item->execute();
+                if (!$stmt_item->execute()) {
+                    throw new Exception("Error en la ejecución de la consulta de ítems: " . $stmt_item->error);
+                }
                 $stmt_item->close();
 
                 // Actualizar stock
                 $stmt_stock = $conn->prepare("UPDATE productos SET stock = stock - ? WHERE id = ? AND stock >= ?");
+                if (!$stmt_stock) {
+                    throw new Exception("Error en la preparación de la consulta de stock: " . $conn->error);
+                }
                 $stmt_stock->bind_param("iii", $cantidad, $producto_id, $cantidad);
-                $stmt_stock->execute();
+                if (!$stmt_stock->execute()) {
+                    throw new Exception("Error en la ejecución de la consulta de stock: " . $stmt_stock->error);
+                }
                 if ($stmt_stock->affected_rows === 0) {
                     throw new Exception('Stock insuficiente para el producto ID ' . $producto_id);
                 }
@@ -281,8 +299,13 @@ function procesarVenta($conn) {
             $accion = 'Registrada venta ID ' . $venta_id;
             $usuario = 'Administrador'; // En un entorno real, obtener del sistema de autenticación
             $stmt_historial = $conn->prepare("INSERT INTO historial (venta_id, accion, usuario) VALUES (?, ?, ?)");
+            if (!$stmt_historial) {
+                throw new Exception("Error en la preparación de la consulta de historial: " . $conn->error);
+            }
             $stmt_historial->bind_param("iss", $venta_id, $accion, $usuario);
-            $stmt_historial->execute();
+            if (!$stmt_historial->execute()) {
+                throw new Exception("Error en la ejecución de la consulta de historial: " . $stmt_historial->error);
+            }
             $stmt_historial->close();
 
             // Confirmar transacción
@@ -304,8 +327,8 @@ function procesarVenta($conn) {
  */
 function obtenerHistorial($conn, $limit, $offset) {
     $historial = [];
-    // Incluye 'v.estado' en la selección
-    $stmt = $conn->prepare("SELECT h.fecha, v.id AS venta_id, v.tipo_documento, v.total, v.estado 
+    // Incluye 'v.numero' en la selección
+    $stmt = $conn->prepare("SELECT h.fecha, v.id AS venta_id, v.numero, v.tipo_documento, v.total, v.estado 
                             FROM historial h 
                             LEFT JOIN ventas v ON h.venta_id = v.id 
                             ORDER BY h.fecha DESC 
@@ -322,6 +345,27 @@ function obtenerHistorial($conn, $limit, $offset) {
     $stmt->close();
     return $historial;
 }
+
+
+
+/**
+ * Obtener el siguiente número secuencial para un tipo de documento específico.
+ */
+function obtenerSiguienteNumero($conn, $tipo_documento) {
+    $stmt = $conn->prepare("SELECT IFNULL(MAX(numero), 0) + 1 AS siguiente_numero FROM ventas WHERE tipo_documento = ?");
+    $stmt->bind_param("s", $tipo_documento);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $siguiente_numero = $row['siguiente_numero'];
+    } else {
+        error_log("Error al obtener siguiente número: " . $stmt->error);
+        $siguiente_numero = 1; // Valor por defecto en caso de error
+    }
+    $stmt->close();
+    return $siguiente_numero;
+}
+
 
 /**
  * Contar el total de entradas en el historial.
@@ -708,31 +752,55 @@ function contarHistorial($conn) {
 
             <!-- Sección para imprimir la boleta -->
             <?php
-            if ($venta_id !== null) {
-                // Obtener detalles de la venta
-                $stmt_venta = $conn->prepare("SELECT tipo_documento, denominacion, moneda, tipo_cambio, fecha, igv, subtotal, total, observaciones FROM ventas WHERE id = ?");
-                $stmt_venta->bind_param("i", $venta_id);
-                if ($stmt_venta->execute()) {
-                    $stmt_venta->bind_result($tipo_documento, $denominacion, $moneda, $tipo_cambio, $fecha, $igv, $subtotal_sin_igv_db, $total_db, $observaciones_db);
-                    $stmt_venta->fetch();
-                    $stmt_venta->close();
-                }
+if ($venta_id !== null) {
+    // Obtener detalles de la venta
+    $stmt_venta = $conn->prepare("SELECT tipo_documento, denominacion, moneda, tipo_cambio, fecha, igv, subtotal, total, observaciones, numero FROM ventas WHERE id = ?");
+    $stmt_venta->bind_param("i", $venta_id);
+    if ($stmt_venta->execute()) {
+        $stmt_venta->bind_result($tipo_documento, $denominacion, $moneda, $tipo_cambio, $fecha, $igv, $subtotal_sin_igv_db, $total_db, $observaciones_db, $numero);
+        $stmt_venta->fetch();
+        $stmt_venta->close();
+    }
 
-                // Obtener ítems de la venta
-                $stmt_items = $conn->prepare("SELECT p.nombre, vi.cantidad, vi.precio_unitario FROM venta_items vi JOIN productos p ON vi.producto_id = p.id WHERE vi.venta_id = ?");
-                $stmt_items->bind_param("i", $venta_id);
-                if ($stmt_items->execute()) {
-                    $result_items = $stmt_items->get_result();
-                    $stmt_items->close();
-                }
-            }
-            ?>
+    // Obtener ítems de la venta
+    $stmt_items = $conn->prepare("SELECT p.nombre, vi.cantidad, vi.precio_unitario FROM venta_items vi JOIN productos p ON vi.producto_id = p.id WHERE vi.venta_id = ?");
+    $stmt_items->bind_param("i", $venta_id);
+    if ($stmt_items->execute()) {
+        $result_items = $stmt_items->get_result();
+        $stmt_items->close();
+    }
+}
+?>
+
 
             <?php if (isset($tipo_documento)): ?>
                 <div class="print-section">
                     <h2>Comprobante de Venta</h2>
                     <p><strong>Tipo de Documento:</strong> <?php echo htmlspecialchars($tipo_documento ?? ''); ?></p>
+                    <p><strong>Número:</strong> 
+    <?php
+        if ($tipo_documento === 'Boleta') {
+            echo 'B-' . str_pad($numero ?? '0001', 4, '0', STR_PAD_LEFT);
+        } elseif ($tipo_documento === 'Factura') {
+            echo 'F-' . str_pad($numero ?? '0001', 4, '0', STR_PAD_LEFT);
+        } else {
+            echo htmlspecialchars($venta_id);
+        }
+    ?>
+</p>
+
                     <p><strong>Denominación:</strong> <?php echo htmlspecialchars($denominacion ?? 'N/A'); ?></p>
+                    <p><strong>Número:</strong> 
+            <?php
+                if ($tipo_documento === 'Boleta') {
+                    echo 'B-' . str_pad($numero ?? '0001', 4, '0', STR_PAD_LEFT);
+                } elseif ($tipo_documento === 'Factura') {
+                    echo 'F-' . str_pad($numero ?? '0001', 4, '0', STR_PAD_LEFT);
+                } else {
+                    echo htmlspecialchars($venta_id);
+                }
+            ?>
+        </p>
                     <p><strong>Moneda:</strong> <?php echo htmlspecialchars($moneda ?? ''); ?></p>
                     <p><strong>Tipo de Cambio:</strong> <?php echo htmlspecialchars($tipo_cambio ?? ''); ?></p>
                     <p><strong>Fecha:</strong> <?php echo htmlspecialchars($fecha ?? ''); ?></p>
@@ -792,16 +860,18 @@ function contarHistorial($conn) {
                         <tr>
                             <td><?php echo htmlspecialchars($entry['fecha']); ?></td>
                             <td>
-                                <?php
-                                    if ($entry['tipo_documento'] === 'Boleta') {
-                                        echo 'B-' . str_pad($entry['venta_id'], 4, '0', STR_PAD_LEFT);
-                                    } elseif ($entry['tipo_documento'] === 'Factura') {
-                                        echo 'F-' . str_pad($entry['venta_id'], 4, '0', STR_PAD_LEFT);
-                                    } else {
-                                        echo htmlspecialchars($entry['venta_id']);
-                                    }
-                                ?>
-                            </td>
+    <?php
+        if ($entry['tipo_documento'] === 'Boleta') {
+            echo 'B-' . str_pad($entry['numero'], 4, '0', STR_PAD_LEFT);
+        } elseif ($entry['tipo_documento'] === 'Factura') {
+            echo 'F-' . str_pad($entry['numero'], 4, '0', STR_PAD_LEFT);
+        } else {
+            echo htmlspecialchars($entry['venta_id']);
+        }
+    ?>
+</td>
+
+
                             <td><?php echo htmlspecialchars($entry['tipo_documento'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars(number_format($entry['total'], 2)); ?></td>
                             <td>
